@@ -10,4 +10,4 @@ Create a simple python application containerized with a dockerfile. The goal her
 3. Get the username and password
 4. Configure in Github
 
-![alt text](image.png)
+![alt text](image-1.png)
