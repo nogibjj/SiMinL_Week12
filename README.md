@@ -3,13 +3,7 @@
 # SiMinL_MiniProj5
 
 # Requirements
-Connect to a SQL database
-Perform CRUD operations (Create, Read, Update, Delete)
-Write at least two different SQL queries
-Grading Criteria 
-
-# Purpose 
-The purpose of this project is to create CRUD actions using SQLite and Python, and to build an ETL-query pipeline. Here, xxx is used as a sample dataset. It is converted to a .db file, and CRUD actions are conducted.
+Create a simple python application containerized with a dockerfile. The goal here is to both demonstrate running your application within a docker container (using docker run terminal commands) but to also build a docker image in your CI/CD pipeline which will be pushed to Docker Hub or other container management service.
 
 # Preparation
 1. Open codespaces

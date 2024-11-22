@@ -1,50 +1,29 @@
-install:
-	pip install --upgrade pip &&\
-		pip install -r requirements.txt
+# Define the image name
+IMAGE_NAME = de_demo
+DOCKER_ID_USER = johncoogan53
 
-test:
-	python -m pytest -vv --cov=main --cov=mylib test_*.py
+# Build the Docker image
+build:
+	docker build -t $(IMAGE_NAME) .
 
-format:	
-	black *.py 
+# Run the Docker container
+run:
+	docker run -p 5000:5000 $(IMAGE_NAME)
 
-lint:
-	#disable comment to test speed
-	#pylint --disable=R,C --ignore-patterns=test_.*?py *.py mylib/*.py
-	#ruff linting is 10-100X faster than pylint
-	ruff check *.py mylib/*.py
+# Remove the Docker image
+clean:
+	docker rmi $(IMAGE_NAME)
 
-container-lint:
-	docker run --rm -i hadolint/hadolint < Dockerfile
+image_show:
+	docker images
 
-refactor: format lint
+container_show:
+	docker ps
 
-deploy:
-	#deploy goes here
-		
-all: install lint test format deploy
+push:
+	docker login
+	docker tag $(IMAGE_NAME) $(DOCKER_ID_USER)/$(IMAGE_NAME)
+	docker push $(DOCKER_ID_USER)/$(IMAGE_NAME):latest
 
-generate_and_push:
-	# Create the markdown file 
-	python test_main.py  # Replace with the actual command to generate the markdown
-
-	# Add, commit, and push the generated files to GitHub
-	@if [ -n "$$(git status --porcelain)" ]; then \
-		git config --local user.email "action@github.com"; \
-		git config --local user.name "GitHub Action"; \
-		git add .; \
-		git commit -m "Add SQL log"; \
-		git push; \
-	else \
-		echo "No changes to commit. Skipping commit and push."; \
-	fi
-
-extract:
-	python main.py extract
-
-transform_load: 
-	python main.py transform_load
-
-###change the below
-query:
-	python main.py general_query "SELECT * FROM gradstudentsDB WHERE Major='CONSTRUCTION SERVICES';"
+login:
+	docker login -u ${DOCKER_ID_USER}
